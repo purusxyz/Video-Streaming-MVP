@@ -66,10 +66,7 @@ app.post("/upload", upload.single("file"), function(req, res){
     }
 
     //ffmpeg
-    const ffmpegCommand = `ffmpeg -i ${videoPath} -codec:v
-    libx264 -codec:a aac -hls_time 10 -hls_playlist_type
-    vod -hls_segment_filename "${outputPath}/segment%03d.ts"
-    -start_number 0 ${hlsPath}`;
+    const ffmpegCommand = `ffmpeg -i ${videoPath} -codec:v libx264 -codec:a aac -hls_time 10 -hls_playlist_type vod -hls_segment_filename "${outputPath}/segment%03d.ts" -start_number 0 ${hlsPath}`;
 
     // no queue because of MVP , not to be used in production
     exec(ffmpegCommand, (error, stdout, stderr) => {
