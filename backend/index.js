@@ -3,6 +3,9 @@ import cors from "cors"
 import multer from "multer"
 import {v4 as uuidv4 } from "uuid"
 import path from "path"
+import { log } from "console"
+import fs from "fs"
+import { exec } from "child_process" // watch out
 
 
 const app = express()
@@ -51,13 +54,15 @@ app.get("/", function(req, res){
 
 app.post("/upload", upload.single("file"), function(req, res){
     console.log("file uploaded")
-    
+    const lessonId = uuidv4()
+    const videoPath = req.file.path
+    const outputPath = `./uploads/courses/${lessonId}`
+    const hlsPath = `${outputPath}/index.m3u8`
+    console.log("hlsPath", hlsPath)
    
 })
 
 
 app.listen(PORT, function(){
     console.log(`App is listening at port ${PORT}`);
-    
-    
 })
