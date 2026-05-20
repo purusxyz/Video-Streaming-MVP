@@ -10,12 +10,11 @@ const app = express()
 //multer middleware
 
 const storage = multer.diskStorage({
-    destination: function(req, res, cb){
-    cd(null, "./uploads")
+    destination: function(req, file, cb){
+    cb(null, "./uploads")
 },
 filename: function(req, file, cb){
-    cb(null, file.fieldname + "-" + uuidv4 + path.extname
-    (file.originalname))
+    cb(null, file.fieldname + "-" + uuidv4() + path.extname(file.originalname))
 }
 })
 
@@ -34,7 +33,7 @@ app.use(
 
 app.use((req, res, next) => {
     res.header(
-        "Access-Control-Allow-Header",
+        "Access-Control-Allow-Headers",
         "Origin, X-Request-With, Content-Type, Accept"
     );
     next()
@@ -52,10 +51,13 @@ app.get("/", function(req, res){
 
 app.post("/upload", upload.single("file"), function(req, res){
     console.log("file uploaded")
+    
+   
 })
 
 
 app.listen(PORT, function(){
     console.log(`App is listening at port ${PORT}`);
+    
     
 })
